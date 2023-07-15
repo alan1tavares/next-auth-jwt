@@ -1,12 +1,13 @@
 'use client';
 
-import { Button, Container, Flex, FormControl, FormLabel, Input, Text, VStack } from '@chakra-ui/react'
+import { Avatar, Button, Container, Flex, FormControl, FormLabel, Input, Text, VStack } from '@chakra-ui/react'
 
 export default function Home() {
   return (
     <Container as='main'>
       <Flex textAlign={'center'} flexDirection={'column'} gap={6}>
         <Text as='h1' fontSize='6xl'> Bem vindo!</Text>
+        <Avatar name='Gato' src='/gato-programando.jpg' alignSelf={'center'} size={'2xl'}/>
         <form>
           <VStack gap={4}>
             <FormControl>
@@ -23,7 +24,7 @@ export default function Home() {
               <Input type='password' />
             </FormControl>
 
-            <Button type='submit' width={'100%'}>Login</Button>
+            <Button colorScheme='pink' type='submit' width={'100%'}>Login</Button>
 
           </VStack>
         </form>
