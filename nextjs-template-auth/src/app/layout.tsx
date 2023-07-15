@@ -14,9 +14,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ept-br">
-      <Providers>
-        <body>{children}</body>
-      </Providers>
+      <body>
+        <Providers>
+          {children}
+        </Providers>
+      </body>
     </html>
   )
 }
