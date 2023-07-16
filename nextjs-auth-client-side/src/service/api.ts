@@ -8,14 +8,16 @@ async function login(email: string, senha: string) {
     if (email == 'cat@retro.com' && senha == '123') {
         return {
             status: 200,
-            json: { token }
+            json: {
+                email,
+                token
+            }
         }
     } else {
         return {
             status: 401,
             message: 'Unathorized',
         }
-
     }
 }
 

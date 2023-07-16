@@ -1,28 +1,52 @@
+'use client';
+
 import api from "@/service/api";
-import { createContext } from "react";
+import { useRouter } from 'next/navigation';
+import { createContext, useState } from "react";
 
 interface IAuthContextType {
-    isAutenticado: boolean;
+    isAutenticado: () => boolean;
+    usuario: IUsuario | null;
+    login: (email: string, senha: string) => Promise<void>;
+}
 
+interface IUsuario {
+    email: string
 }
 
 export const AuthContext = createContext({} as IAuthContextType);
 
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+    const router = useRouter();
+    const [usuario, setUsuario] = useState<IUsuario | null>(null);
 
-export function AuthProvider({ children }) {
-    const isAutenticado = false;
+    const isAutenticado = (): boolean => {
+        const token = localStorage.getItem('token');
+        console.log(token);
+        if (token) return true;
+        else return false;
+    };
 
-    async function login(email:string, senha: string) {
+    async function login(email: string, senha: string) {
         const res = await api.login(email, senha);
-        let token: string;
+        console.log('login');
+        if (res.json) {
+            localStorage.setItem('token', JSON.stringify({
+                email: res.json.email,
+                token: res.json.token
+            }));
 
-        // if (res.json) {
-        //     token = res.json.token;
-        //     localStorage.setItem('token', token);
-        // }
+            setUsuario({
+                email: res.json.email
+            })
+
+            console.log('push')
+            router.push('/authArea');
+        }
     }
+
     return (
-        <AuthContext.Provider value={{ isAutenticado}}>
+        <AuthContext.Provider value={{ isAutenticado, usuario, login }}>
             {children}
         </AuthContext.Provider>
     );
