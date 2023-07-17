@@ -7,7 +7,6 @@ import { createContext, useState } from "react";
 interface IAuthContextType {
     isAutenticado: () => boolean;
     usuario: IUsuario | null;
-    login: (email: string, senha: string) => Promise<void>;
 }
 
 interface IUsuario {
@@ -27,26 +26,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         else return false;
     };
 
-    async function login(email: string, senha: string) {
-        const res = await api.login(email, senha);
-        console.log('login');
-        if (res.json) {
-            localStorage.setItem('token', JSON.stringify({
-                email: res.json.email,
-                token: res.json.token
-            }));
-
-            setUsuario({
-                email: res.json.email
-            })
-
-            console.log('push')
-            router.push('/authArea');
-        }
-    }
-
     return (
-        <AuthContext.Provider value={{ isAutenticado, usuario, login }}>
+        <AuthContext.Provider value={{ isAutenticado, usuario }}>
             {children}
         </AuthContext.Provider>
     );
