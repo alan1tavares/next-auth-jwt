@@ -1,10 +1,8 @@
 'use client';
 
-import { AuthContext } from '@/contexts/AuthContext';
-import auth from '@/service/authService';
+import { AuthContext } from '@/contexts/Auth/AuthContext';
 import { Avatar, Button, Container, Flex, FormControl, FormLabel, Input, Text, VStack } from '@chakra-ui/react'
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -16,16 +14,10 @@ interface IFormInput {
 
 export default function Home() {
   const { register, handleSubmit } = useForm<IFormInput>();
-  const router = useRouter();
+  const { login } = useContext(AuthContext);
 
   const onSubmit: SubmitHandler<IFormInput> = async ({ email, senha }) => {
-    try {
-      if (await auth.login(email, senha)) {
-        router.push('/authArea');
-      }
-    } catch (error) {
-      alert(error)
-    }
+    await login(email, senha);
   }
 
   return (
