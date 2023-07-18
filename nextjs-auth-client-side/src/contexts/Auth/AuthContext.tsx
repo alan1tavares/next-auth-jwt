@@ -2,7 +2,7 @@
 
 import api from "@/service/api";
 import { useRouter } from 'next/navigation';
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { IUsuario } from "./types";
 import auth from "./authService";
 
@@ -18,9 +18,16 @@ export const AuthContext = createContext({} as IAuthContextType);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const router = useRouter();
-    const [usuario, setUsuario] = useState<IUsuario | null>(null);
+    const [usuario, setUsuario] = useState<IUsuario | null>(getUsuario());
 
     const isAutenticado = !!usuario;
+
+    function getUsuario(): IUsuario | null {
+        if (!localStorage.getItem('token')) { return null }
+        return {
+            email: 'cat@retro.com'
+        }
+    }
 
     async function login(email: string, senha: string) {
         const usuario = await auth.login(email, senha)
