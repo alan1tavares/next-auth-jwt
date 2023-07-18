@@ -1,3 +1,5 @@
+'use client'
+
 import api from "../../service/api";
 import { IUsuario } from "./types";
 
@@ -6,31 +8,38 @@ async function login(email: string, senha: string): Promise<IUsuario | null> {
 
     if (!res.json) return null;
 
-    localStorage.setItem('token', JSON.stringify({
+    localStorage.setItem('usuario', JSON.stringify({
         email: res.json.email,
         token: res.json.token
     }));
 
     return {
-        email: res.json.email
+        email: res.json.email,
+        token: res.json.token
     }
 }
 
 
 function logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
 }
 
-function hasUsuarioLogado() {
-    const token = localStorage.getItem('token');
-    if (token) return true;
-    else return false;
+function getUsuario(): IUsuario | null {
+    const usuario = localStorage.getItem('usuario');
+    if (!usuario) { return null }
+    return JSON.parse(usuario) as IUsuario;
 }
+
+// function hasUsuarioLogado() {
+//     const usuario = localStorage.getItem('usuario');
+//     if (usuario) return true;
+//     else return false;
+// }
 
 const auth = {
     login,
     logout,
-    hasUsuarioLogado
+    getUsuario
 }
 
 export default auth;

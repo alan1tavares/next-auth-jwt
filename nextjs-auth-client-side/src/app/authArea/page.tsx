@@ -3,7 +3,7 @@
 import { Button, Container, VStack } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react"
 import { AuthContext } from "@/contexts/Auth/AuthContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
