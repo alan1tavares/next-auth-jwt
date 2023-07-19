@@ -30,12 +30,6 @@ function getUsuario(): IUsuario | null {
     return JSON.parse(usuario) as IUsuario;
 }
 
-// function hasUsuarioLogado() {
-//     const usuario = localStorage.getItem('usuario');
-//     if (usuario) return true;
-//     else return false;
-// }
-
 const auth = {
     login,
     logout,
