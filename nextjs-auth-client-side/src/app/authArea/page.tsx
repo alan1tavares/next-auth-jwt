@@ -15,7 +15,7 @@ export default function authArea() {
         if (!isAutenticado) {
             router.push('/');
         }
-    }, []);
+    }, [isAutenticado]);
 
     function handlerClick() {
         logout();

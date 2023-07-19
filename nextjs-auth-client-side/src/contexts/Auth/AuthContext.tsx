@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { createContext, useEffect, useState } from "react";
 import { IUsuario } from "./types";
 import auth from "./authService";
+import { useUsuario } from './useUsuario';
 
 interface IAuthContextType {
     isAutenticado: boolean;
@@ -17,9 +18,10 @@ export const AuthContext = createContext({} as IAuthContextType);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const router = useRouter();
-    const [usuario, setUsuario] = useState<IUsuario | null>(auth.getUsuario());
+    const usuarioStorage = useUsuario();
+    const [usuario, setUsuario] = useState<IUsuario | null>(usuarioStorage ? JSON.parse(usuarioStorage) : null);
 
-    const isAutenticado = !!usuario;
+    const isAutenticado = !!usuarioStorage;
 
     async function login(email: string, senha: string) {
         const usuario = await auth.login(email, senha)
