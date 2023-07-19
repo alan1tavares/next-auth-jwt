@@ -1,6 +1,7 @@
 'use client';
 
 import { Avatar, Button, Container, Flex, FormControl, FormLabel, Input, Text, VStack } from '@chakra-ui/react'
+import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface IFormInput {
@@ -39,6 +40,8 @@ export default function Home() {
 
           </VStack>
         </form>
+
+        <Link href={'/authArea'}>Área privada 👀</Link>
       </Flex>
     </Container>
 
